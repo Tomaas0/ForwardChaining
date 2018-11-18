@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.IO;
 
 namespace ConsoleApp1
@@ -14,11 +13,11 @@ namespace ConsoleApp1
         {
             int iCount = 0; //Iteraciju skaitliukas
 
-            GDB db = new GDB(true);
+            GDB db = new GDB();
 
             #region Protokolas 1 dalis
             string output;
-            StreamWriter file = new StreamWriter(ConfigurationManager.AppSettings["ProtocolFileName"], false);
+            StreamWriter file = new StreamWriter(String.Format("{0}.txt", db.TestName), false);
             file.WriteLine("1 DALIS. Duomenys");
             file.WriteLine("");
             file.WriteLine("  1) Taisyklės");

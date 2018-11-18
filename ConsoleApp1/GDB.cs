@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.IO;
 
 namespace ConsoleApp1
 {
@@ -33,6 +35,7 @@ namespace ConsoleApp1
     }
     class GDB
     {
+        public String TestName { get; set; }
         public List<Projekcija> Projekcijos { get; set; }
         public List<char> InitFaktai { get; set; }
         public List<char> Faktai { get; set; }
@@ -51,9 +54,41 @@ namespace ConsoleApp1
             InitFaktai = new List<char>();
             Faktai = new List<char>();
             Kelias = new List<Projekcija>();
+            StreamReader file = new StreamReader(ConfigurationManager.AppSettings["InputFileName"]);
+            TestName = file.ReadLine();
+            file.ReadLine();
+            string line = file.ReadLine();
+            int projekcijuCount = 0;
+            while (line != "")
+            {
+                projekcijuCount++;
+                Projekcija p = new Projekcija();
+                p.Index = projekcijuCount;
+                line = line.Split('\t')[0];
+                p.Rezultatas = line.ElementAt(0);
+                for (int i = 1; i < line.Length; i++)
+                {
+                    p.Reikalavimai.Add(line.ElementAt(i));
+                }
+                Projekcijos.Add(p);
+                line = file.ReadLine();
+            }
+            line = file.ReadLine();
+            line = file.ReadLine();
+            foreach (Char c in line)
+            {
+                InitFaktai.Add(c);
+            }
+            line = file.ReadLine();
+            line = file.ReadLine();
+            line = file.ReadLine();
+            Tikslas = line.ElementAt(0);
+            file.Close();
         }
         public GDB(bool x)
         {
+            TestName = "test";
+
             Projekcijos = new List<Projekcija>();
 
             Projekcija p = new Projekcija();
