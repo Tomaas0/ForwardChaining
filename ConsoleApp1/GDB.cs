@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.IO;
 
 namespace ConsoleApp1
 {
-    class Projekcija
+    public class Projekcija
     {
         public int Index { get; set; }
         public List<char> Reikalavimai { get; set; }
@@ -33,7 +32,7 @@ namespace ConsoleApp1
             return output;
         }
     }
-    class GDB
+    public class GDB
     {
         public String TestName { get; set; }
         public List<Projekcija> Projekcijos { get; set; }
@@ -48,13 +47,13 @@ namespace ConsoleApp1
 
         public List<Projekcija> Kelias { get; set; }
         public String FaktaiToString { get { return String.Format("{0} ir {1}", CharListToString(InitFaktai), CharListToString(Faktai)); } }
-        public GDB()
+        public GDB(string inputFileName)
         {
             Projekcijos = new List<Projekcija>();
             InitFaktai = new List<char>();
             Faktai = new List<char>();
             Kelias = new List<Projekcija>();
-            StreamReader file = new StreamReader(ConfigurationManager.AppSettings["InputFileName"]);
+            StreamReader file = new StreamReader(inputFileName);
             TestName = file.ReadLine();
             file.ReadLine();
             string line = file.ReadLine();
@@ -84,41 +83,6 @@ namespace ConsoleApp1
             line = file.ReadLine();
             Tikslas = line.ElementAt(0);
             file.Close();
-        }
-        public GDB(bool x)
-        {
-            TestName = "test";
-
-            Projekcijos = new List<Projekcija>();
-
-            Projekcija p = new Projekcija();
-            p.Index = 1;
-            p.Reikalavimai.Add('F');
-            p.Reikalavimai.Add('B');
-            p.Rezultatas = 'Z';
-            Projekcijos.Add(p);
-
-            p = new Projekcija();
-            p.Index = 2;
-            p.Reikalavimai.Add('C');
-            p.Reikalavimai.Add('D');
-            p.Rezultatas = 'F';
-            Projekcijos.Add(p);
-
-            p = new Projekcija();
-            p.Index = 3;
-            p.Reikalavimai.Add('A');
-            p.Rezultatas = 'D';
-            Projekcijos.Add(p);
-
-            InitFaktai = new List<char>();
-            InitFaktai.Add('A');
-            InitFaktai.Add('B');
-            InitFaktai.Add('C');
-
-            Faktai = new List<char>();
-            Tikslas = 'Z';
-            Kelias = new List<Projekcija>();
         }
 
         private String CharListToString(List<char> list)
